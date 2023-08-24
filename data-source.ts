@@ -8,7 +8,7 @@ import {
   DB_PORT,
   DB_USER,
 } from './utils/config';
-import { Receipt } from "./entity/receipt";
+import { Receipt } from './entity/receipt';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -19,8 +19,6 @@ export const AppDataSource = new DataSource({
   database: DB_NAME,
   synchronize: false, // do not set to true, entities must be controlled only by migrations
   logging: false,
-  entities: [
-    Receipt,
-  ],
+  entities: [Receipt],
   // migrations: [path.resolve(__dirname, 'migration/**')],
 });

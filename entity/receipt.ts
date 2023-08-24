@@ -1,5 +1,11 @@
-import { BeforeInsert, Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
-import { getCurrentEpoch } from "../utils/helpers";
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { getCurrentEpoch } from '../utils/helpers';
 
 @Entity()
 @Index(['user', 'created_at'])
@@ -37,13 +43,11 @@ export class Receipt {
   })
   tx_hash: string;
 
-
-  @Column({type: 'int', nullable: false, readonly: true})
+  @Column({ type: 'int', nullable: false, readonly: true })
   created_at: number;
 
   @BeforeInsert()
-  public setCreatedAt(){
+  public setCreatedAt() {
     this.created_at = getCurrentEpoch();
   }
-
 }

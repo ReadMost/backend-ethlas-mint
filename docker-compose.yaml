@@ -2,17 +2,17 @@ version: '3.7'
 
 services:
   web:
-    image: "nginx:latest"
-    restart: "always"
+    image: 'nginx:latest'
+    restart: 'always'
     expose:
-      - "80"
+      - '80'
     environment:
-      - "DOMAIN_NAME=${DOMAIN_NAME}"
-      - "PROXY_PASS=http://ethlas-mint-api:${PORT}"
+      - 'DOMAIN_NAME=${DOMAIN_NAME}'
+      - 'PROXY_PASS=http://ethlas-mint-api:${PORT}'
     volumes:
-      - "../../voyage/infra/nginx/conf.d:/etc/nginx/conf.d/templates"
+      - '../../voyage/infra/nginx/conf.d:/etc/nginx/conf.d/templates'
     networks:
-      - "app_network"
+      - 'app_network'
     labels:
       - traefik.http.routers.${TRAEFIK_BACKEND}.rule=Host(`${DOMAIN_NAME}`)
       - traefik.http.routers.${TRAEFIK_BACKEND}.tls=true
@@ -22,29 +22,28 @@ services:
       - ethlas-mint-api
     command: /bin/bash -c "envsubst '$${DOMAIN_NAME} $${PROXY_PASS}' < /etc/nginx/conf.d/templates/conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
-
   ethlas-mint-api:
     build:
       context: .
       dockerfile: Dockerfile
     hostname: ethlas-mint-api
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     expose:
-      - "${PORT}"
+      - '${PORT}'
     working_dir: /app
     volumes:
       - .env:/app/.env
     environment:
       - ETHLAS_ENV=${ETHLAS_ENV}
     networks:
-      - "app_network"
-      - "db_network"
+      - 'app_network'
+      - 'db_network'
     command: yarn dev
 
 networks:
   app_network:
     external:
-      name: "${NETWORK_NAME}"
+      name: '${NETWORK_NAME}'
   db_network:
     external: true

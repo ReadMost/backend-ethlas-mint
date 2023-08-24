@@ -1,6 +1,6 @@
-import path from "path";
-import * as fs from "fs";
-import dotenv from "dotenv";
+import path from 'path';
+import * as fs from 'fs';
+import dotenv from 'dotenv';
 dotenv.config();
 
 export const ETHLAS_ENV = process.env.ETHLAS_ENV || 'dev';
