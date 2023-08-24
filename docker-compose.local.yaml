@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  ethlas-mint-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: ethlas-mint-api
+    ports:
+      - "${PORT}:${PORT}"
+    expose:
+      - "${PORT}"
+    working_dir: /app
+    volumes:
+      - .env:/app/.env
+    environment:
+      - ETHLAS_ENV=${ETHLAS_ENV}
+    networks:
+      - "app_network"
+      - "db_network"
+    command: yarn dev
+
+networks:
+  app_network:
+    external:
+      name: "${NETWORK_NAME}"
+  db_network:
+    external: true
